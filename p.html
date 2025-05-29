@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Brief BiWeekly 발표 자료</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css');
+        
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif;
+            background: linear-gradient(135deg, #ea002c 0%, #ff6b6b 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100vh;
+            padding: 20px;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            background: white;
+            margin-bottom: 2px;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .slide h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            line-height: 1.2;
+        }
+
+        .slide h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #ea002c;
+            line-height: 1.3;
+        }
+
+        .slide h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #ea002c;
+        }
+
+        .slide p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+
+        .author {
+            font-size: 1rem;
+            color: #95a5a6;
+            margin-top: 30px;
+        }
+
+        .content-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            border-left: 4px solid #ea002c;
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .process-step {
+            background: linear-gradient(135deg, #ea002c 0%, #ff6b6b 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-weight: 500;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #ffebee 0%, #fce4ec 100%);
+            border: 2px solid #ea002c;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .nav-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        .slide-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            z-index: 100;
+        }
+
+        .bullet-point {
+            text-align: left;
+            margin: 8px 0;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .bullet-point::before {
+            content: "▶ ";
+            color: #ea002c;
+            font-weight: bold;
+        }
+
+        .future-step {
+            background: linear-gradient(135deg, #ffebee 0%, #fce4ec 100%);
+            border-left: 4px solid #ea002c;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 8px 0;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .title-slide {
+            background: linear-gradient(135deg, #ea002c 0%, #ff6b6b 100%);
+            color: white;
+        }
+
+        .title-slide h1 {
+            color: white;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .title-slide .subtitle {
+            color: rgba(255,255,255,0.9);
+        }
+
+        .title-slide .author {
+            color: rgba(255,255,255,0.8);
+        }
+
+        @media (max-width: 375px) {
+            .slide h1 { font-size: 1.8rem; }
+            .slide h2 { font-size: 1.5rem; }
+            .slide h3 { font-size: 1.2rem; }
+            .slide p { font-size: 1rem; }
+            .content-box { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="slide-indicator" id="slideIndicator">1 / 8</div>
+
+        <!-- 슬라이드 1: 제목 -->
+        <div class="slide active title-slide">
+            <h1>AI Brief BiWeekly</h1>
+            <p class="subtitle">사내 뉴스레터 수행 계획안</p>
+            <div style="margin-top: 40px;">
+                <p class="author">PI/ERP본부 AI Evangelist 박민정</p>
+                <p class="author">2025년 5월</p>
+            </div>
+        </div>
+
+        <!-- 슬라이드 2: 인사 및 개요 -->
+        <div class="slide">
+            <h1>인사 및 개요</h1>
+            
+            <div class="content-box">
+                <h3>기획 목적</h3>
+                <p>Ackertoner 동료들에게<br>실무 중심 AI 인사이트 제공</p>
+            </div>
+
+            <div class="content-box">
+                <h3>발행 계획</h3>
+                <p>• 격주 화요일 발행<br>• PPT + 요약 메일<br>• 윤은빈 컨설턴트와 공동 작성</p>
+            </div>
+
+            <div class="highlight-box">
+                <strong>핵심 방향성</strong><br>
+                실무 적용 가능 · 간결한 전달 · 현장감 있는 사례
+            </div>
+        </div>
+
+        <!-- 슬라이드 3: 콘텐츠 구성 -->
+        <div class="slide">
+            <h1>뉴스레터 콘텐츠 구성</h1>
+            
+            <div class="content-box">
+                <h3>① AI 동향 뉴스</h3>
+                <p>제조/통신 분야 핵심 이슈 선별<br>업계 트렌드 및 기술 동향</p>
+            </div>
+
+            <div class="content-box">
+                <h3>② DT 컨설팅 실제 사례</h3>
+                <p>프로젝트 현장 AI 활용 사례<br>성공/실패 경험 공유</p>
+            </div>
+
+            <div class="content-box">
+                <h3>③ 실무 팁 코너</h3>
+                <p>회의 요약, 기능 설명서 작성 등<br>바로 사용 가능한 프롬프트 제공</p>
+            </div>
+        </div>
+
+        <!-- 슬라이드 4: 운영 일정 -->
+        <div class="slide">
+            <h1>운영 일정 및 절차</h1>
+            
+            <h2>주간 제작 프로세스</h2>
+            
+            <div class="process-step">수~목요일<br>콘텐츠 수집 및 초안 작성</div>
+            <div class="process-step">금요일<br>실무 실험 및 검토</div>
+            <div class="process-step">월요일<br>PPT 정리 및 최종 편집</div>
+            <div class="process-step">화요일 오전<br>배포 (팀스, 메일, 게시판)</div>
+        </div>
+
+        <!-- 슬라이드 5: 왜 뉴스레터인가 -->
+        <div class="slide">
+            <h1>왜 뉴스레터인가?</h1>
+            
+            <div class="content-box">
+                <h3>선택한 이유</h3>
+                <div class="bullet-point">바쁜 Ackertoner들의 시간 효율성</div>
+                <div class="bullet-point">짧고 간결한 핵심 정보 전달</div>
+                <div class="bullet-point">원하는 시점에 빠른 확인</div>
+                <div class="bullet-point">정보의 공식적 기록 및 축적</div>
+            </div>
+
+            <div class="highlight-box">
+                <strong>미래 비전</strong><br>
+                AI 인사이트 허브로 발전<br>
+                부서 간 교류 활성화 플랫폼
+            </div>
+        </div>
+
+        <!-- 슬라이드 6: 기대효과 -->
+        <div class="slide">
+            <h1>기대효과</h1>
+            
+            <div class="content-box">
+                <h3>조직 차원 효과</h3>
+                <div class="bullet-point">AI 인식 제고</div>
+                <div class="bullet-point">실무 적용력 강화</div>
+                <div class="bullet-point">업무 효율성 개선</div>
+            </div>
+
+            <div class="content-box">
+                <h3>측정 지표</h3>
+                <div class="bullet-point">뉴스레터 오픈율 및 참여도</div>
+                <div class="bullet-point">실무 팁 활용 피드백</div>
+                <div class="bullet-point">부서별 AI 사례 제보 건수</div>
+            </div>
+        </div>
+
+        <!-- 슬라이드 7: 향후 활용 방안 -->
+        <div class="slide">
+            <h1>향후 활용 방안</h1>
+            
+            <h2>단계별 확장 계획</h2>
+            
+            <div class="future-step">1단계: 기본 뉴스레터 안정화</div>
+            <div class="future-step">2단계: 업종별 맞춤형 콘텐츠<br>(제조/통신/공공)</div>
+            <div class="future-step">3단계: 상호작용 플랫폼 구축<br>(Q&A, Knowledge DB 연동)</div>
+            <div class="future-step">4단계: 통합 AI 학습 생태계<br>(세션, 워크샵 연계)</div>
+        </div>
+
+        <!-- 슬라이드 8: 마무리 -->
+        <div class="slide">
+            <h1>마무리</h1>
+            
+            <div class="content-box">
+                <h3>약속드리는 것</h3>
+                <div class="bullet-point">매 회차 정성스런 실용 콘텐츠</div>
+                <div class="bullet-point">바쁜 일정에 맞는 간결한 전달</div>
+                <div class="bullet-point">실제 업무에 도움되는 인사이트</div>
+            </div>
+
+            <div class="highlight-box">
+                <strong>함께 만들어가는<br>Ackerton AI 인사이트 플랫폼</strong>
+            </div>
+
+            <p style="margin-top: 30px; font-size: 1.2rem; color: #ea002c; font-weight: 600;">
+                적극적인 관심과 참여 부탁드립니다<br>
+                감사합니다
+            </p>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" onclick="previousSlide()">← 이전</button>
+        <button class="nav-btn" onclick="nextSlide()">다음 →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            updateIndicator();
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        function updateIndicator() {
+            document.getElementById('slideIndicator').textContent = 
+                `${currentSlide + 1} / ${totalSlides}`;
+        }
+
+        // 키보드 네비게이션
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') previousSlide();
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === ' ') nextSlide();
+        });
+
+        // 터치 스와이프 기능
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) nextSlide();
+            if (touchEndX > touchStartX + 50) previousSlide();
+        }
+
+        // 초기 슬라이드 표시기 업데이트
+        updateIndicator();
+    </script>
+</body>
+</html>
